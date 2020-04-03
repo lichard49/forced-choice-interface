@@ -32,6 +32,19 @@
             </button>
           </div>
         </div>
+        <div id="answers-section" class="row" hidden>
+          <div class="col s12">
+            <p>Which sound was higher in pitch?</p>
+            <button id="first-sound-button"
+              class="waves-effect waves-light btn">
+              First sound
+            </button>
+            <button id="second-sound-button"
+              class="waves-effect waves-light btn">
+              Second sound
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -69,7 +82,8 @@
       // steps of the study procedure
       function speakIntro() {
         var text = 'I am going to play two sounds.  You will be \
-          asked to decide which is higher in pitch.';
+          asked to decide which is higher in pitch.  Now look away \
+          from the screen.';
         speak(text, speakFirstPrompt);
       }
 
@@ -83,7 +97,30 @@
       function speakSecondPrompt() {
         var text = 'This is the second sound';
         speak(text, function() {
-          playTone(466.164, 4, null);
+          playTone(466.164, 4, speakOutro);
+        });
+      }
+
+      function speakOutro() {
+        var text = 'You may now look back at the screen';
+        speak(text, showAnswers);
+      }
+
+      function showAnswers() {
+        var answers_section = document.getElementById(
+          'answers-section');
+        answers_section.hidden = false;
+
+        var first_sound_button = document.getElementById(
+          'first-sound-button');
+        first_sound_button.addEventListener('click', function() {
+          alert('Incorrect');
+        });
+
+        var second_sound_button = document.getElementById(
+          'second-sound-button');
+        second_sound_button.addEventListener('click', function() {
+          alert('Correct');
         });
       }
 
