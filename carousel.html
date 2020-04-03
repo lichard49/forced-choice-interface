@@ -28,39 +28,45 @@
         <div class="row">
           <div class="col s12">
             <div class="carousel carousel-slider center">
-              <div class="carousel-item red white-text" href="#one!">
+              <div id="instructions-slide"
+                class="carousel-item red white-text">
                 <h2>Instructions</h2>
                 <p class="white-text">
-                  When you are ready to begin, press Next.  You will
+                  When you are ready to begin, press Start.  You will
                   hear two sounds, and then be asked to select which
                   one was higher in pitch.
                 </p>
-                <a class="btn waves-effect white grey-text 
-                  darken-text-2">
-                  Next
+                <a id="start-button" class="btn waves-effect 
+                  white grey-text darken-text-2">
+                  Start
                 </a>
               </div>
-              <div class="carousel-item amber white-text" href="#two!">
+              <div id="first-sound-slide"
+                class="carousel-item amber white-text">
                 <h2>First Sound</h2>
                 <p class="white-text">Listen carefully...</p>
-                <a class="btn waves-effect white grey-text 
-                  darken-text-2" hidden>
+                <a id="first-sound-button" class="btn waves-effect
+                  white grey-text darken-text-2"
+                  style="display: none;">
                   Select
                 </a>
               </div>
-              <div class="carousel-item green white-text" href="#three!">
+              <div id="second-sound-slide"
+                class="carousel-item green white-text">
                 <h2>Second Sound</h2>
                 <p class="white-text">Listen carefully...</p>
-                <a class="btn waves-effect white grey-text 
-                  darken-text-2" hidden>
+                <a id="second-sound-button" class="btn waves-effect
+                  white grey-text darken-text-2"
+                  style="display: none;">
                   Select
                 </a>
               </div>
-              <div class="carousel-item blue white-text" href="#four!">
+              <div id="question-slide"
+                class="carousel-item blue white-text">
                 <h2>Which sound was higher in pitch?</h2>
                 <p class="white-text">
-                  Swipe to your the screen that shows your selection,
-                  and press Select.
+                  Swipe back to your the screen that shows the answer
+                  you wish to choose, and press Select.
                 </p>
               </div>
             </div>
@@ -77,7 +83,62 @@
         var instances = M.Carousel.init(elems, {
           fullWidth: true,
           indicators: true,
-          noWrap: true
+          noWrap: true,
+          onCycleTo: handleNewSlide
+        });
+        var carousel = instances[0];
+
+        var first_sound_seen = false;
+        var second_sound_seen = false;
+
+        function handleNewSlide(e) {
+          switch(e.id) {
+            case 'instructions-slide':
+              break;
+            case 'first-sound-slide':
+              showFirstPrompt();
+              break;
+            case 'second-sound-slide':
+              showSecondPrompt();
+              break;
+            case 'question-slide':
+              console.log('hi');
+              showAnswers();
+              break;
+          }
+        }
+
+        function showAnswers() {
+          var first_sound_button =
+            document.getElementById('first-sound-button');
+          var second_sound_button =
+            document.getElementById('second-sound-button');
+
+          first_sound_button.style.display = 'inline-block';
+          second_sound_button.style.display = 'inline-block';
+        }
+
+        function showFirstPrompt() {
+          if (!first_sound_seen) {
+            playTone(466.164, 4, function() {
+              setTimeout(carousel.next(), 500);
+            });
+          }
+          first_sound_seen = true;
+        }
+
+        function showSecondPrompt() {
+          if (!second_sound_seen) {
+            playTone(440, 4, function() {
+              setTimeout(carousel.next(), 500);
+            });
+          }
+          second_sound_seen = true;
+        }
+
+        var start_button = document.getElementById('start-button');
+        start_button.addEventListener('click', function() {
+          carousel.next();
         });
       });
     </script>
