@@ -29,26 +29,30 @@
           <div class="col s12">
             <p>
               Place the phone on a table and one hand on each side of
-              it.  In 10 seconds, you will hear two sounds, then be
-              asked to decide which one is higher in pitch.  Use your
-              left hand to press the left button to indicate that the
-              first sound was higher, and use your right hand to
-              press the right button the indicate that the second
-              sound was higher.
+              it.  You will hear two sounds, then be asked to decide
+              which one is higher in pitch.  Use your left hand to
+              press the left button to indicate that the first sound
+              was higher, and use your right hand to press the right
+              button the indicate that the second sound was higher.
+              To begin, press either button.
             </p>
           </div>
         </div>
         <div id="answers-section" class="row">
-          <button id="first-sound-button"
-            class="col s5 waves-effect waves-light btn"
-            style="height: 20em;">
-            First sound
-          </button>
-          <button id="second-sound-button"
-            class="col s5 offset-s2 waves-effect waves-light btn"
-            style="height: 20em;">
-            Second sound
-          </button>
+          <div class="col s5">
+            <button id="first-sound-button"
+              class="col s12 waves-effect waves-light btn"
+              style="height: 20em;">
+              Begin
+            </button>
+          </div>
+          <div class="col s5 offset-s2">
+            <button id="second-sound-button"
+              class="col s12 waves-effect waves-light btn"
+              style="height: 20em;">
+              Begin
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -57,17 +61,51 @@
     <script type="text/javascript" src="js/materialize.min.js"></script>
     <script type="text/javascript">
       document.addEventListener('DOMContentLoaded', function() {
+        function showAnswers() {
+          first_sound_button.disabled = false;
+          second_sound_button.disabled = false;
+
+          first_sound_button.addEventListener('click', function() {
+            alert('Correct');
+          });
+          second_sound_button.addEventListener('click', function() {
+            alert('Incorrect');
+          });
+        }
+
+        function showFirstPrompt() {
+          playTone(high_tone_frequency, tone_length, function() {
+            setTimeout(showSecondPrompt(), 500);
+          });
+        }
+
+        function showSecondPrompt() {
+          playTone(low_tone_frequency, tone_length, showAnswers);
+        }
+
+        function beginProcedure() {
+          first_sound_button.disabled = true;
+          second_sound_button.disabled = true;
+
+          first_sound_button.innerHTML = 'First sound';
+          second_sound_button.innerHTML = 'Second sound';
+
+          first_sound_button.removeEventListener('click',
+            beginProcedure);
+          second_sound_button.removeEventListener('click',
+            beginProcedure);
+
+          showFirstPrompt();
+        }
+
         var first_sound_button =
           document.getElementById('first-sound-button');
         var second_sound_button =
           document.getElementById('second-sound-button');
 
-        first_sound_button.addEventListener('click', function() {
-          alert('Correct');
-        });
-        second_sound_button.addEventListener('click', function() {
-          alert('Incorrect');
-        })
+        first_sound_button.addEventListener('click', beginProcedure);
+        second_sound_button.addEventListener('click',
+          beginProcedure);
       });
     </script>
   </body>
