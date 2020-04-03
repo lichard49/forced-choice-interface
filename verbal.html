@@ -64,14 +64,15 @@
       function speakFirstPrompt() {
         var text = 'This is the first sound';
         speak(text, function() {
-          playTone(440, 4, speakSecondPrompt);
+          playTone(low_tone_frequency, tone_length,
+            speakSecondPrompt);
         });
       }
 
       function speakSecondPrompt() {
         var text = 'This is the second sound';
         speak(text, function() {
-          playTone(466.164, 4, speakOutro);
+          playTone(high_tone_frequency, tone_length, speakOutro);
         });
       }
 

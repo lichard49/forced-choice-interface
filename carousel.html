@@ -127,7 +127,7 @@
 
         function showFirstPrompt() {
           if (!first_sound_seen) {
-            playTone(466.164, 4, function() {
+            playTone(high_tone_frequency, tone_length, function() {
               setTimeout(carousel.next(), 500);
             });
           }
@@ -136,7 +136,7 @@
 
         function showSecondPrompt() {
           if (!second_sound_seen) {
-            playTone(440, 4, function() {
+            playTone(low_tone_frequency, tone_length, function() {
               setTimeout(carousel.next(), 500);
             });
           }

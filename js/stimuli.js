@@ -25,3 +25,7 @@ function playTone(frequency, duration, callback) {
   oscillator.start(0);
   oscillator.stop(audio_context.currentTime + duration);
 }
+
+var tone_length = 2;
+var high_tone_frequency = 466.164;
+var low_tone_frequency = 440;
