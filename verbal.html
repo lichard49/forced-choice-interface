@@ -23,10 +23,45 @@
             <h5>Verbal Cues Demo</h5>
           </div>
         </div>
+        <div class="row">
+          <div class="col s12">
+            <p>Make sure your volume is on.  When ready, press go.</p>
+            <button id="start-button"
+              class="waves-effect waves-light btn">
+              Go
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script>
+      function speak(text, callback) {
+        var utter = new SpeechSynthesisUtterance(text)
+        utter.onend = callback;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utter);
+      }
+
+      function speakIntro() {
+        var text = 'I am going to play two sounds.  You will be \
+          asked to decide which is higher in pitch...';
+        speak(text, function() {
+          setTimeout(speakFirstPrompt, 500);
+        });
+      }
+
+      function speakFirstPrompt() {
+        var text = 'This is the first sound';
+        speak(text, null);
+      }
+
+      var start_button = document.getElementById('start-button');
+      start_button.addEventListener('click', function(e) {
+        speakIntro();
+      });
+    </script>
   </body>
 </html>
