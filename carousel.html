@@ -65,7 +65,7 @@
                 class="carousel-item blue white-text">
                 <h2>Which sound was higher in pitch?</h2>
                 <p class="white-text">
-                  Swipe back to your the screen that shows the answer
+                  Swipe back to the screen that shows the answer
                   you wish to choose, and press Select.
                 </p>
               </div>
@@ -116,6 +116,13 @@
 
           first_sound_button.style.display = 'inline-block';
           second_sound_button.style.display = 'inline-block';
+
+          first_sound_button.addEventListener('click', function() {
+            alert('Correct');
+          });
+          second_sound_button.addEventListener('click', function() {
+            alert('Incorrect');
+          })
         }
 
         function showFirstPrompt() {
